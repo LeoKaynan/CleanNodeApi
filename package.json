@@ -1,0 +1,8 @@
+{
+  "name": "CleanNodeApi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:LeoKaynan/CleanNodeApi.git",
+  "author": "Leonardo Kaynan <leokaynan@hotmail.com>",
+  "license": "MIT"
+}
