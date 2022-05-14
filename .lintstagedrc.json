@@ -1,5 +1,6 @@
 {
     "*.ts": [
-        "eslint --fix"
+        "yarn eslint --fix",
+        "yarn test:staged"
     ]
 }
