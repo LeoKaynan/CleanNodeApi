@@ -9,7 +9,7 @@ export class SignUpController implements Controller {
       ['name', 'email', 'password', 'passwordConfirmation'];
     for (const field of requiredFields) {
       if (!request.body[field]) {
-        return badRequest(new MissingParamError('these fields are required: name, email, password and password confirmation'));
+        return badRequest(new MissingParamError(`missing param: ${field}`));
       }
     }
     return {statusCode: 201};
