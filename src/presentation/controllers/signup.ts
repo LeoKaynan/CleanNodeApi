@@ -1,5 +1,7 @@
+import {Request, Response} from '../protocols/http';
+
 export class SignUpController {
-  handle(request: any): any {
+  handle(request: Request): Response {
     const requiredFields =
       ['name', 'email', 'password', 'passwordConfirmation'];
     for (const field of requiredFields) {
@@ -10,6 +12,6 @@ export class SignUpController {
         });
       }
     }
-    return {statusCode: 200};
+    return {statusCode: 201};
   };
 };
