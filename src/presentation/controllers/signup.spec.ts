@@ -1,16 +1,27 @@
+import {InvalidParamError} from '../erros/invalidParamError';
 import {MissingParamError} from '../erros/missingParamError';
+import {ValidatorEmail} from '../protocols/validator';
 import {SignUpController} from './signup';
 
+class ValidatorEmailStub implements ValidatorEmail {
+  isValid(email: string): boolean {
+    return true;
+  }
+}
+const validatorEmailStub = new ValidatorEmailStub();
+
+const request = {
+  body: {
+    name: 'any_name',
+    email: 'any_email@email.com',
+    password: 'any_password',
+    passwordConfirmation: 'any_password',
+  },
+};
+
 describe('#SignUp Controller', () => {
-  const sut = new SignUpController();
-  const request = {
-    body: {
-      name: 'any_name',
-      email: 'any_email@email.com',
-      password: 'any_password',
-      passwordConfirmation: 'any_password',
-    },
-  };
+  const sut = new SignUpController(validatorEmailStub);
+
   test('Should return 400 and an error if name is not provided', () => {
     // eslint-disable-next-line no-unused-vars
     const {name, ...body} = request.body;
@@ -53,5 +64,13 @@ describe('#SignUp Controller', () => {
     expect(response.statusCode).toBe(400);
     expect(response.body)
         .toEqual(new MissingParamError('missing param: passwordConfirmation'));
+  });
+
+  test('Should return 400 and an error if email is invalid', () => {
+    jest.spyOn(validatorEmailStub, 'isValid').mockReturnValueOnce(false);
+    const response = sut.handle(request);
+    expect(response.statusCode).toBe(400);
+    expect(response.body)
+        .toEqual(new InvalidParamError('invalid param: email'));
   });
 });
