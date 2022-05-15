@@ -6,7 +6,7 @@ import {Request, Response} from '../protocols/http';
 import {ValidatorEmail} from '../protocols/validator';
 
 export class SignUpController implements Controller {
-  constructor(private readonly ValidatorEmail: ValidatorEmail) {}
+  constructor(private readonly validatorEmail: ValidatorEmail) {}
 
   handle({body}: Request): Response {
     const requiredFields =
@@ -18,7 +18,7 @@ export class SignUpController implements Controller {
       }
     }
 
-    const isValidEmail = this.ValidatorEmail.isValid(body.email);
+    const isValidEmail = this.validatorEmail.isValid(body.email);
 
     if (!isValidEmail) return badRequest(new InvalidParamError('invalid param: email'));
 

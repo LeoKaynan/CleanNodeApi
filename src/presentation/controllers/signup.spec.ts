@@ -23,9 +23,12 @@ describe('#SignUp Controller', () => {
   const sut = new SignUpController(validatorEmailStub);
 
   test('Should return 400 and an error if name is not provided', () => {
-    // eslint-disable-next-line no-unused-vars
-    const {name, ...body} = request.body;
-    const requestWithoutName = {body};
+    const requestWithoutName = {
+      body: {
+        ...request.body,
+        name: undefined,
+      },
+    };
 
     const response = sut.handle(requestWithoutName);
     expect(response.statusCode).toBe(400);
@@ -34,9 +37,12 @@ describe('#SignUp Controller', () => {
   });
 
   test('Should return 400 and an error if email is not provided', () => {
-    // eslint-disable-next-line no-unused-vars
-    const {email, ...body} = request.body;
-    const requestWithoutEmail = {body};
+    const requestWithoutEmail = {
+      body: {
+        ...request.body,
+        email: undefined,
+      },
+    };
 
     const response = sut.handle(requestWithoutEmail);
     expect(response.statusCode).toBe(400);
@@ -45,9 +51,12 @@ describe('#SignUp Controller', () => {
   });
 
   test('Should return 400 and an error if password is not provided', () => {
-    // eslint-disable-next-line no-unused-vars
-    const {password, ...body} = request.body;
-    const requestWithoutPassword = {body};
+    const requestWithoutPassword = {
+      body: {
+        ...request.body,
+        password: undefined,
+      },
+    };
 
     const response = sut.handle(requestWithoutPassword);
     expect(response.statusCode).toBe(400);
@@ -56,9 +65,12 @@ describe('#SignUp Controller', () => {
   });
 
   test('Should return 400 and an error if passwordConfirmation is not provided', () => {
-    // eslint-disable-next-line no-unused-vars
-    const {passwordConfirmation, ...body} = request.body;
-    const requestWithoutpasswordConfirmation = {body};
+    const requestWithoutpasswordConfirmation = {
+      body: {
+        ...request.body,
+        passwordConfirmation: undefined,
+      },
+    };
 
     const response = sut.handle(requestWithoutpasswordConfirmation);
     expect(response.statusCode).toBe(400);
