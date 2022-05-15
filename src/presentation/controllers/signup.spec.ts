@@ -13,5 +13,6 @@ describe('#SignUp Controller', () => {
     };
     const response = sut.handle(request);
     expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual(new Error('these fields are required: name, email, password and password confirmation'));
   });
 });
