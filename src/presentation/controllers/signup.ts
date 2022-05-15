@@ -1,3 +1,4 @@
+import {MissingParamError} from '../erros/missingParamError';
 import {Request, Response} from '../protocols/http';
 
 export class SignUpController {
@@ -8,7 +9,7 @@ export class SignUpController {
       if (!request.body[field]) {
         return ({
           statusCode: 400,
-          body: new Error('these fields are required: name, email, password and password confirmation'),
+          body: new MissingParamError('these fields are required: name, email, password and password confirmation'),
         });
       }
     }
