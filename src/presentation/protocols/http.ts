@@ -3,6 +3,6 @@ export interface Response {
   body?: any,
 }
 
-export interface Request {
-  body?: any,
+export interface Request<T = any> {
+  body?: T,
 }
