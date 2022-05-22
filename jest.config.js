@@ -6,7 +6,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  // collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   roots: ['<rootDir>/src'],
   testEnvironment: 'node',
 };

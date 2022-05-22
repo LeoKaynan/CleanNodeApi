@@ -10,10 +10,10 @@ export const internalServerError = () => ({
   body: new ServerError(),
 });
 
-export const ok = <T = any>(data: T) => ({
-  statusCode: 200,
-  body: data,
-});
+// export const ok = <T = any>(data: T) => ({
+//   statusCode: 200,
+//   body: data,
+// });
 
 export const created = <T = any>(data: T) => ({
   statusCode: 201,
