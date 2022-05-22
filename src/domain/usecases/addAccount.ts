@@ -10,5 +10,5 @@ export type AddAccountInput = Omit<AccountModel, 'id'>;
 export type AddAccountOutput = Omit<AccountModel, 'password'>;
 
 export interface AddAccount {
-  add(account: AddAccountInput): AddAccountOutput;
+  add(account: AddAccountInput): Promise<AddAccountOutput>;
 }
