@@ -1,11 +1,11 @@
-import {AccountModel, AccountModelWithoutPassword, AddAccount} from '../../../domain/usecases/addAccount';
+import {AddAccountInput, AddAccountOutput, AddAccount} from '../../../domain/usecases/addAccount';
 import {InvalidParamError, MissingParamError, ServerError} from '../../erros';
 import {ValidatorEmail} from '../../protocols/validator';
 import {SignUpController} from './signup';
 
 class AddAccountStub implements AddAccount {
-  add({name, email}: AccountModel): AccountModelWithoutPassword {
-    return ({name, email});
+  add({name, email}: AddAccountInput): AddAccountOutput {
+    return ({id: 'valid_id', name, email});
   }
 }
 const addAccountStub = new AddAccountStub();
@@ -121,7 +121,7 @@ describe('#SignUp Controller', () => {
     expect(response.body).toEqual(new ServerError());
   });
 
-  test('Should call email validator with correct email', () => {
+  test('Should call addAccount with correct values', () => {
     const addSpy = jest.spyOn(addAccountStub, 'add');
     sut.handle(request);
     expect(addSpy).toHaveBeenCalledWith({
@@ -138,5 +138,17 @@ describe('#SignUp Controller', () => {
     const response = sut.handle(request);
     expect(response.statusCode).toBe(500);
     expect(response.body).toEqual(new ServerError());
+  });
+
+  test('Should return 201 if valid data is provided', () => {
+    const response = sut.handle(request);
+    expect(response).toEqual({
+      statusCode: 201,
+      body: {
+        id: 'valid_id',
+        name: request.body.name,
+        email: request.body.email,
+      },
+    });
   });
 });
