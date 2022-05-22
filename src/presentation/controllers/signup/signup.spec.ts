@@ -1,6 +1,14 @@
+import {AccountModel, AccountModelWithoutPassword, AddAccount} from '../../../domain/usecases/addAccount';
 import {InvalidParamError, MissingParamError, ServerError} from '../../erros';
-import {ValidatorEmail} from '../../protocols';
+import {ValidatorEmail} from '../../protocols/validator';
 import {SignUpController} from './signup';
+
+class AddAccountStub implements AddAccount {
+  add({name, email}: AccountModel): AccountModelWithoutPassword {
+    return ({name, email});
+  }
+}
+const addAccountStub = new AddAccountStub();
 
 class ValidatorEmailStub implements ValidatorEmail {
   isValid(email: string): boolean {
@@ -19,7 +27,7 @@ const request = {
 };
 
 describe('#SignUp Controller', () => {
-  const sut = new SignUpController(validatorEmailStub);
+  const sut = new SignUpController(addAccountStub, validatorEmailStub);
 
   test('Should return 400 and an error if name is not provided', () => {
     const requestWithoutName = {
@@ -111,5 +119,15 @@ describe('#SignUp Controller', () => {
     const response = sut.handle(request);
     expect(response.statusCode).toBe(500);
     expect(response.body).toEqual(new ServerError());
+  });
+
+  test('Should call email validator with correct email', () => {
+    const addSpy = jest.spyOn(addAccountStub, 'add');
+    sut.handle(request);
+    expect(addSpy).toHaveBeenCalledWith({
+      name: request.body.name,
+      email: request.body.email,
+      password: request.body.password,
+    });
   });
 });

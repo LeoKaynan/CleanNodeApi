@@ -1,6 +1,6 @@
 export interface Response<T = any> {
   statusCode: number,
-  body?: T,
+  body?: T
 }
 
 export interface Request<T = any> {
