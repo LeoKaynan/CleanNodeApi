@@ -130,4 +130,13 @@ describe('#SignUp Controller', () => {
       password: request.body.password,
     });
   });
+
+  test('Should return 500 if AddAccount throws exception', () => {
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const response = sut.handle(request);
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toEqual(new ServerError());
+  });
 });
