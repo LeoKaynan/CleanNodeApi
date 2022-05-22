@@ -17,10 +17,15 @@ const accountData: AddAccountInput = {
 describe('#DbAddAccount', () => {
   const sut = new DbAddAccount(encrypterStub);
 
-
   test('Should call Encrypter with correct password', async () => {
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt');
     await sut.add(accountData);
     expect(encryptSpy).toHaveBeenCalledWith(accountData.password);
+  });
+
+  test('Should throw if Encrypter throws', async () => {
+    jest.spyOn(encrypterStub, 'encrypt').mockRejectedValueOnce(new Error());
+    const accountPromise = sut.add(accountData);
+    expect(accountPromise).rejects.toThrow();
   });
 });

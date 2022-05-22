@@ -1,9 +1,4 @@
-export interface AccountModel {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
+import {AccountModel} from '../models/accountModel';
 
 export type AddAccountInput = Omit<AccountModel, 'id'>;
 
