@@ -1,7 +1,5 @@
-import {InvalidParamError} from '../erros/invalidParamError';
-import {MissingParamError} from '../erros/missingParamError';
-import {ServerError} from '../erros/serverError';
-import {ValidatorEmail} from '../protocols/validator';
+import {InvalidParamError, MissingParamError, ServerError} from '../erros';
+import {ValidatorEmail} from '../protocols';
 import {SignUpController} from './signup';
 
 class ValidatorEmailStub implements ValidatorEmail {
