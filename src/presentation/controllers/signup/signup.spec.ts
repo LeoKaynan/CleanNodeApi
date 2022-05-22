@@ -1,5 +1,5 @@
-import {InvalidParamError, MissingParamError, ServerError} from '../erros';
-import {ValidatorEmail} from '../protocols';
+import {InvalidParamError, MissingParamError, ServerError} from '../../erros';
+import {ValidatorEmail} from '../../protocols';
 import {SignUpController} from './signup';
 
 class ValidatorEmailStub implements ValidatorEmail {
@@ -83,6 +83,19 @@ describe('#SignUp Controller', () => {
     expect(response.statusCode).toBe(400);
     expect(response.body)
         .toEqual(new InvalidParamError('invalid param: email'));
+  });
+
+  test('Should return 400 and an error if password and password confirmation are diferent', () => {
+    const requestWithInvalidPasswordConfirmation = {
+      body: {
+        ...request.body,
+        passwordConfirmation: 'invalid_password',
+      },
+    };
+    const response = sut.handle(requestWithInvalidPasswordConfirmation);
+    expect(response.statusCode).toBe(400);
+    expect(response.body)
+        .toEqual(new InvalidParamError('invalid param: passwordConfirmation'));
   });
 
   test('Should call email validator with correct email', () => {
