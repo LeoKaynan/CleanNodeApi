@@ -1,6 +1,9 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const { defaults: tsjPreset } = require('ts-jest/presets')
+
 module.exports = {
-  preset: 'ts-jest',
+  preset: '@shelf/jest-mongodb',
+//   preset: '@shelf/jest-mongodb',
   testEnvironment: 'node',
   clearMocks: true,
   collectCoverage: true,
@@ -9,4 +12,5 @@ module.exports = {
   // collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   roots: ['<rootDir>/src'],
   testEnvironment: 'node',
+  transform: tsjPreset.transform,
 };
