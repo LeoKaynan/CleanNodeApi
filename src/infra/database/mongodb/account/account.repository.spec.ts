@@ -4,6 +4,10 @@ import {AccountMongoRepository} from './account.repository';
 describe('Account Mongo Repository', () => {
   beforeAll(async () => await mongoHelper.connect());
   afterAll(async () => await mongoHelper.disconnect());
+  beforeEach(async () => {
+    const accountCollection = mongoHelper.getCollection('accounts');
+    await accountCollection.deleteMany({});
+  });
 
   const sut = new AccountMongoRepository();
   test('Should return account on success', async () => {
