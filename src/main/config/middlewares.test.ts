@@ -18,4 +18,11 @@ describe('Middlewares', () => {
         .expect('access-control-allow-headers', '*')
         .expect('access-control-allow-methods', '*');
   });
+
+  test('Should content-type default json', async () => {
+    app.get('/test_content_type', (req, res) => res.send());
+    await request(app)
+        .get('/test_cors')
+        .expect('content-type', /json/);
+  });
 });
